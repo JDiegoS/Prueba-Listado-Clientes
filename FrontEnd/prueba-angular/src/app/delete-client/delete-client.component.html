@@ -1,0 +1,21 @@
+
+<div class="topbar">
+    Nuevo Cliente
+</div>
+    
+<br>
+<br>
+
+<div class="content-form">
+    <form #userForm="ngForm" (ngSubmit)="submitForm(userForm)">
+    
+        <div >
+        <p>Nombre</p>
+        <input type="text" class="form-control" id="name" name="name" [(ngModel)]="userDetails.name" >
+
+        </div>
+        
+        <button type="submit" class="btn delete">Eliminar</button>
+    </form>
+
+</div>

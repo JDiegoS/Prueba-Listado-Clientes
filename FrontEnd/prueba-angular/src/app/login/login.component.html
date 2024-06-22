@@ -1,0 +1,27 @@
+<div class="topbar">
+    Login
+</div>
+    
+<br>
+<br>
+
+<div class="content-form">
+    <form #userForm="ngForm" (ngSubmit)="submitForm(userForm)">
+    
+        <div >
+        <p>Usuario</p>
+        <input type="text" class="form-control" id="username" name="username" [(ngModel)]="userDetails.username" >
+
+        </div>
+        
+        <div class="form-group">
+        <p>Contrasena</p>
+        <input class="form-control" id="password" name="password" [(ngModel)]="userDetails.password">
+
+        </div>
+
+
+        <button type="submit" class="btn add">Ir</button>
+    </form>
+
+</div>

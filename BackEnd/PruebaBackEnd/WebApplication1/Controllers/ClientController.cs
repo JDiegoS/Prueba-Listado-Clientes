@@ -20,7 +20,7 @@ namespace WebApplication1.Controllers
         [Route("GetClients")]
         public JsonResult GetClients()
         {
-            string query = "select * from dbo.Clients";
+            string query = "select * from dbo.Client_Detail";
             DataTable dt = new DataTable();
             string sqlDatasource = _config.GetConnectionString("PruebaDBConn");
             SqlDataReader myReader;
@@ -39,35 +39,32 @@ namespace WebApplication1.Controllers
             return new JsonResult(dt);
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("AddClient")]
-        public JsonResult AddClient([FromBody] Client_Detail newClient)
+        public JsonResult AddClient(string name, string location, string phone, string comments)
         {
             string sqlDatasource = _config.GetConnectionString("PruebaDBConn");
             using (SqlConnection myConn = new SqlConnection(sqlDatasource))
             {
                 myConn.Open();
-                using (SqlCommand myCommand = new SqlCommand("SP_ADD_CLIENT", myConn))
-                {
-                    myCommand.CommandType = CommandType.StoredProcedure;
-                    myCommand.Parameters.AddWithValue("@STATUS", SqlDbType.NVarChar).Value = newClient.Status;
-                    myCommand.Parameters.AddWithValue("@NAME", SqlDbType.NVarChar).Value = newClient.Name;
-                    myCommand.Parameters.AddWithValue("@LOCATION", SqlDbType.NVarChar).Value = newClient.Location;
-                    myCommand.Parameters.AddWithValue("@PHONE", SqlDbType.NVarChar).Value = newClient.Phone_Number;
-                    myCommand.Parameters.AddWithValue("@COMMENTS", SqlDbType.NVarChar).Value = newClient.Comments;
-                    myCommand.Parameters.AddWithValue("@DATEC", SqlDbType.Date).Value = DateTime.Now;
-                    myCommand.Parameters.AddWithValue("@CLIENTID", SqlDbType.Int).Value = newClient.ClientID;
-                    myCommand.ExecuteNonQuery();
-                    myConn.Close();
-                }
+                SqlCommand myCommand = new SqlCommand("SP_ADD_CLIENT", myConn);
+                myCommand.CommandType = CommandType.StoredProcedure;
+                myCommand.Parameters.Add("@NAME", SqlDbType.VarChar).Value = name;
+                myCommand.Parameters.Add("@LOCATION", SqlDbType.VarChar).Value = location;
+                myCommand.Parameters.Add("@PHONE", SqlDbType.VarChar).Value = phone;
+                myCommand.Parameters.Add("@COMMENTS", SqlDbType.VarChar).Value = comments;
+                myCommand.Parameters.Add("@DATEC", SqlDbType.Date).Value = DateTime.Now;
+                //myCommand.Parameters.AddWithValue("@CLIENTID", SqlDbType.Int).Value = newClient.ClientID;
+                myCommand.ExecuteNonQuery();
+                myConn.Close();
             }
 
             return new JsonResult("Cliente Agregado Exitosamente");
         }
 
-        [HttpDelete]
+        [HttpGet]
         [Route("DeleteClient")]
-        public JsonResult DeleteClient(int clientId)
+        public JsonResult DeleteClient(string name)
         {
             string sqlDatasource = _config.GetConnectionString("PruebaDBConn");
             SqlDataReader myReader;
@@ -77,13 +74,13 @@ namespace WebApplication1.Controllers
                 using (SqlCommand myCommand = new SqlCommand("SP_DELETE_CLIENT", myConn))
                 {
                     myCommand.CommandType = CommandType.StoredProcedure;
-                    myCommand.Parameters.AddWithValue("@CLIENTID", SqlDbType.Int).Value = clientId;
+                    myCommand.Parameters.Add("@NAME", SqlDbType.VarChar).Value = name;
                     myCommand.ExecuteNonQuery();
                     myConn.Close();
                 }
             }
 
-            return new JsonResult("Cliente Agregado Exitosamente");
+            return new JsonResult("Cliente Eliminado Exitosamente");
         }
     }
 }

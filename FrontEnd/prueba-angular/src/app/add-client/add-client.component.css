@@ -1,0 +1,37 @@
+.topbar {
+    background: #254791;
+    text-align: center;
+    height: 60px;
+    font-size:30px;
+    color: white;
+    padding-top: 20px;
+
+}
+
+.btn {
+    width: 100px;
+    height: 30px;
+    border: none;
+    font-size: 16px;
+    color: white;
+    margin-left: 70px;
+    margin-top: 20px;
+}
+
+.add {
+    background-color:#33850d;
+}
+
+.content-form {
+    width: 250px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+input {
+    width: 200px;
+    height:30px;
+    font-size: 16px;
+    margin-left:15px;
+    margin-bottom:20px;
+}

@@ -37,5 +37,28 @@ namespace WebApplication1.Controllers
 
             return new JsonResult(dt);
         }
+
+        [HttpGet]
+        [Route("GetUser")]
+        public JsonResult GetUser(string username, string password)
+        {
+            string query = "select * from dbo.Users where Username = '" + username + "' and Password = '" + password + "'";
+            DataTable dt = new DataTable();
+            string sqlDatasource = _config.GetConnectionString("PruebaDBConn");
+            SqlDataReader myReader;
+            using (SqlConnection myConn = new SqlConnection(sqlDatasource))
+            {
+                myConn.Open();
+                using (SqlCommand myCommand = new SqlCommand(query, myConn))
+                {
+                    myReader = myCommand.ExecuteReader();
+                    dt.Load(myReader);
+                    myReader.Close();
+                    myConn.Close();
+                }
+            }
+
+            return new JsonResult(dt);
+        }
     }
 }

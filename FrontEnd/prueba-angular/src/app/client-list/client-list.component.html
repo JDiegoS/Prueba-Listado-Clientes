@@ -1,0 +1,33 @@
+<div class="topbar">
+Listado de Clientes
+</div>
+
+<br>
+<br>
+
+<div class="botones">
+    <button class="btn add" (click)="AddClient()">Agregar</button>
+    <button class="btn edit" (click)="EditClient()">Editar</button>
+    <button class="btn delete" (click)="DeleteClient()">Eliminar</button>
+</div>
+<br>
+
+<table>
+    <tr class="row header">
+        <th>Cliente</th>
+        <th>Estado</th>
+        <th>Ubicacion</th>
+        <th>Telefono</th>
+        <th>Comentarios</th>
+        <th>Fecha</th>
+    </tr>
+    <tr *ngFor="let cliente of clients" class="row">
+        <td class="cell">{{ cliente.Name}} </td>
+        <td class="cell">{{ cliente.Status}} </td>
+        <td class="cell">{{ cliente.Location}} </td>
+        <td class="cell">{{ cliente.Phone_Number}} </td>
+        <td class="cell">{{ cliente.Comments}} </td>
+        <td class="cell">{{ cliente.Date_Created}} </td>
+    </tr>
+</table>
+
